@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PandyPost | Domine o Algoritmo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- HIGH-END SAAS AESTHETICS --- */
+        :root {
+            --bg-body: #050505;
+            --bg-card: #0f0f0f;
+            --primary: #8A2BE2; /* BlueViolet */
+            --accent: #00ffcc; /* Tech Green para contraste de "Growth" */
+            --gradient-text: linear-gradient(90deg, #fff, #a855f7);
+            --gradient-glow: radial-gradient(circle at center, rgba(138, 43, 226, 0.15) 0%, rgba(5,5,5,0) 70%);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-sec: #9ca3af;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', sans-serif; /* Fonte Tech/Moderna */
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .btn-text { font-family: 'Montserrat', sans-serif; } /* Fonte de Impacto */
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* Efeitos Visuais */
+        .glow-effect {
+            position: absolute; width: 600px; height: 600px;
+            background: var(--primary); filter: blur(200px); opacity: 0.15;
+            border-radius: 50%; z-index: -1; top: -200px; left: 50%; transform: translateX(-50%);
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 24px 0; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); background: rgba(5,5,5,0.8); backdrop-filter: blur(10px);
+            position: fixed; width: 100%; top: 0; z-index: 100;
+        }
+        .brand { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+        .brand span { color: var(--primary); }
+        
+        .btn-nav {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: #fff; padding: 10px 24px; border-radius: 8px; font-weight: 600;
+            transition: 0.3s; cursor: pointer; font-size: 0.9rem;
+        }
+        .btn-nav:hover { background: rgba(255,255,255,0.1); border-color: var(--text-main); }
+
+        /* --- HERO --- */
+        .hero {
+            padding: 180px 0 100px; text-align: center; position: relative;
+        }
+        
+        .pill {
+            display: inline-block; padding: 6px 16px; background: rgba(138, 43, 226, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.3); color: #d8b4fe; border-radius: 50px;
+            font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 30px; text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 24px; letter-spacing: -2px;
+        }
+        .hero h1 span {
+            background: linear-gradient(to right, #fff, #c084fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem; color: var(--text-sec); max-width: 700px; margin: 0 auto 50px; font-weight: 300;
+        }
+
+        /* Botão Principal */
+        .cta-primary {
+            background: #fff; color: #000; padding: 18px 48px; font-size: 1.1rem;
+            border-radius: 8px; font-weight: 800; border: none; cursor: pointer;
+            box-shadow: 0 0 40px rgba(255,255,255,0.2); transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .cta-primary:hover {
+            transform: translateY(-5px); box-shadow: 0 0 60px rgba(138, 43, 226, 0.4);
+        }
+        
+        /* Stats Ticker (Simulando crescimento) */
+        .stats-ticker {
+            display: flex; gap: 40px; justify-content: center; margin-top: 60px;
+            opacity: 0.7; font-family: monospace;
+        }
+        .stat-item { display: flex; flex-direction: column; align-items: center; }
+        .stat-val { font-size: 1.5rem; color: var(--accent); font-weight: 700; }
+        .stat-lbl { font-size: 0.8rem; color: var(--text-sec); text-transform: uppercase; }
+
+        /* --- PAIN/PROBLEM (The Hamster Wheel) --- */
+        .problem-section {
+            padding: 100px 0; border-top: 1px solid var(--border);
+            background: linear-gradient(180deg, var(--bg-body) 0%, #0a0a0a 100%);
+        }
+        .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        
+        .pain-text h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .pain-text p { color: var(--text-sec); margin-bottom: 20px; font-size: 1.1rem; }
+        
+        .vs-card {
+            background: var(--bg-card); border: 1px solid var(--border); padding: 40px; border-radius: 16px;
+        }
+        .amador { border-left: 3px solid #ef4444; padding-left: 20px; margin-bottom: 30px; opacity: 0.6; }
+        .pro { border-left: 3px solid var(--accent); padding-left: 20px; }
+        .role { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px; display: block; }
+        .desc { font-size: 1.2rem; font-weight: 600; }
+
+        /* --- FEATURES (The System) --- */
+        .features { padding: 100px 0; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        
+        .f-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--border); padding: 35px; border-radius: 16px; transition: 0.3s;
+        }
+        .f-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .f-icon { font-size: 2rem; margin-bottom: 20px; display: block; }
+        .f-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .f-card p { color: var(--text-sec); font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- LIFESTYLE SECTION --- */
+        .lifestyle {
+            text-align: center; padding: 100px 0; background: url('https://grainy-gradients.vercel.app/noise.svg'), radial-gradient(circle, #1a0529 0%, #050505 100%);
+        }
+        .lifestyle h2 { font-size: 3rem; max-width: 800px; margin: 0 auto 30px; }
+        .lifestyle p { color: var(--text-sec); max-width: 600px; margin: 0 auto 40px; }
+
+        /* --- PRICING --- */
+        .price-wrapper { padding: 100px 0; text-align: center; }
+        .price-card {
+            background: #0a0a0a; border: 1px solid var(--border); max-width: 500px; margin: 0 auto;
+            padding: 60px 40px; border-radius: 24px; position: relative; overflow: hidden;
+        }
+        .price-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        .amount { font-size: 4rem; font-weight: 800; color: #fff; margin: 20px 0; }
+        .period { font-size: 1rem; color: var(--text-sec); font-weight: 400; }
+        .benefits-list { list-style: none; text-align: left; margin: 40px 0; padding: 0 20px; }
+        .benefits-list li { margin-bottom: 15px; display: flex; align-items: center; color: #ddd; }
+        .benefits-list li span { color: var(--accent); margin-right: 15px; font-weight: bold; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .grid-split { grid-template-columns: 1fr; }
+            .stats-ticker { flex-wrap: wrap; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-effect"></div>
+
+    <header>
+        <div class="container">
+            <div class="brand">Pandy<span>Post</span>.</div>
+            <button class="btn-nav">Login Dashboard</button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <span class="pill">Para Creators, Influencers & Visionários</span>
+            <h1>A ONIPRESENÇA DIGITAL<br>NÃO EXIGE <span>SUA PRESENÇA.</span></h1>
+            <p>Alimente o algoritmo 24/7 enquanto você vive sua vida. O protocolo definitivo de agendamento para quem joga o jogo do crescimento infinito.</p>
+            
+            <button class="cta-primary">Começar Agora</button>
+
+            <!-- Social Proof Simulada (Métricas) -->
+            <div class="stats-ticker">
+                <div class="stat-item">
+                    <span class="stat-val">+1.2M</span>
+                    <span class="stat-lbl">Views Geradas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-val">3x</span>
+                    <span class="stat-lbl">Crescimento Médio</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-val">0h</span>
+                    <span class="stat-lbl">Tempo Perdido</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM / AWARENESS -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="grid-split">
+                <div class="pain-text">
+                    <h2>SAIA DA "RODA DOS RATOS" DA CRIAÇÃO DE CONTEÚDO.</h2>
+                    <p>O maior erro do influencer estagnado é achar que precisa postar manualmente todos os dias. Isso gera burnout, inconsistência e queda de engajamento.</p>
+                    <p>Os maiores nomes do mercado (Finch, Kayky, Top Afiliados) não tocam no botão "Publicar" há anos. Eles têm sistemas.</p>
+                    <p style="color: #fff; font-weight: 600;">O PandyPost é esse sistema.</p>
+                </div>
+                <div class="vs-card">
+                    <div class="amador">
+                        <span class="role" style="color: #ef4444;">O AMADOR (Burnout)</span>
+                        <div class="desc">Grava, edita e posta no mesmo dia. Esquece horários. Fica refém do celular nas viagens.</div>
+                    </div>
+                    <div class="pro">
+                        <span class="role" style="color: var(--accent);">O PROFISSIONAL (Scale)</span>
+                        <div class="desc">Tira um dia para produzir. Agenda o mês inteiro no PandyPost. Viaja enquanto o algoritmo trabalha para ele.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 2.5rem;">SUA MÁQUINA DE <span style="color: var(--primary);">AUTORIDADE</span></h2>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="f-card">
+                    <span class="f-icon">🚀</span>
+                    <h3>Viralização Multi-Plataforma</h3>
+                    <p>Um vídeo curto. Três destinos (TikTok, Reels, Shorts). Triplique suas chances de viralizar sem triplicar seu trabalho.</p>
+                </div>
+                <div class="f-card">
+                    <span class="f-icon">📅</span>
+                    <h3>Calendário Infinito</h3>
+                    <p>Programe semanas de conteúdo em minutos. O PandyPost posta religiosamente nos horários de pico, chova ou faça sol.</p>
+                </div>
+                <div class="f-card">
+                    <span class="f-icon">🛡️</span>
+                    <h3>Proteção Anti-Shadowban</h3>
+                    <p>Usamos tecnologia de ponta para simular comportamento humano. Sua conta segura, sem riscos de bloqueio por automação barata.</p>
+                </div>
+                <div class="f-card">
+                    <span class="f-icon">💎</span>
+                    <h3>Interface de Cinema</h3>
+                    <p>Dark mode nativo. Analíticos claros. Uma dashboard que dá prazer de usar e mostra exatamente o crescimento do seu império.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIFESTYLE / ASPIRATIONAL -->
+    <section class="lifestyle">
+        <div class="container">
+            <h2>"VOCÊ NÃO PODE ESCALAR O QUE DEPENDE <span style="color: var(--accent);">DAS SUAS MÃOS.</span>"</h2>
+            <p>O digital é um jogo de alavancagem. Quem tem as melhores ferramentas, ganha. Pare de jogar no modo *Hard*.</p>
+            <button class="cta-primary" style="background: transparent; border: 1px solid #fff; color: #fff;">Ver Planos</button>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="price-wrapper">
+        <div class="container">
+            <div class="price-card">
+                <h3 style="text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; color: var(--primary);">Acesso Creator Pro</h3>
+                <div class="amount">R$ 97<span class="period">/mês</span></div>
+                <p style="color: var(--text-sec); font-size: 0.9rem;">Menos que um jantar. Mais valioso que um funcionário.</p>
+
+                <ul class="benefits-list">
+                    <li><span>✓</span> Contas Ilimitadas (Insta/TikTok/YT)</li>
+                    <li><span>✓</span> Uploads em Alta Definição (4K)</li>
+                    <li><span>✓</span> Agendamento de Stories e Feed</li>
+                    <li><span>✓</span> Analíticos de Crescimento</li>
+                    <li><span>✓</span> Suporte Prioritário</li>
+                </ul>
+
+                <button class="cta-primary" style="width: 100%; background: var(--primary); color: #fff; box-shadow: 0 0 20px rgba(138,43,226,0.4);">Assinar PandyPost</button>
+                <p style="margin-top: 20px; font-size: 0.8rem; color: #555;">7 dias de garantia incondicional.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; border-top: 1px solid var(--border); color: #444; font-size: 0.8rem;">
+        <p>&copy; 2024 PandyPost. Feito para quem quer dominar o mundo.</p>
+    </footer>
+
+</body>
+</html>
