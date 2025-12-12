@@ -2,291 +2,348 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PandyPost | Domine o Algoritmo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PandyPost | O Protocolo de Escala</title>
+    
+    <!-- Fontes Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- HIGH-END SAAS AESTHETICS --- */
+        /* --- CORE VISUALS --- */
         :root {
-            --bg-body: #050505;
-            --bg-card: #0f0f0f;
-            --primary: #8A2BE2; /* BlueViolet */
-            --accent: #00ffcc; /* Tech Green para contraste de "Growth" */
-            --gradient-text: linear-gradient(90deg, #fff, #a855f7);
-            --gradient-glow: radial-gradient(circle at center, rgba(138, 43, 226, 0.15) 0%, rgba(5,5,5,0) 70%);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg-deep: #030303;
+            --bg-surface: #0a0a0a;
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.5);
             --text-main: #ffffff;
-            --text-sec: #9ca3af;
+            --text-muted: #9ca3af;
+            --border: rgba(255, 255, 255, 0.08);
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body {
-            background-color: var(--bg-body);
+            background-color: var(--bg-deep);
             color: var(--text-main);
-            font-family: 'Space Grotesk', sans-serif; /* Fonte Tech/Moderna */
+            font-family: var(--font-body);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        h1, h2, h3, .btn-text { font-family: 'Montserrat', sans-serif; } /* Fonte de Impacto */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.04; pointer-events: none; z-index: 50;
+        }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 60; }
         
-        /* Efeitos Visuais */
-        .glow-effect {
-            position: absolute; width: 600px; height: 600px;
-            background: var(--primary); filter: blur(200px); opacity: 0.15;
-            border-radius: 50%; z-index: -1; top: -200px; left: 50%; transform: translateX(-50%);
+        .gradient-text {
+            background: linear-gradient(90deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* --- HEADER --- */
         header {
-            padding: 24px 0; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); background: rgba(5,5,5,0.8); backdrop-filter: blur(10px);
-            position: fixed; width: 100%; top: 0; z-index: 100;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(3, 3, 3, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
         }
-        .brand { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-family: var(--font-head); font-weight: 800; font-size: 1.3rem; letter-spacing: -1px; color: #fff; }
         .brand span { color: var(--primary); }
-        
-        .btn-nav {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            color: #fff; padding: 10px 24px; border-radius: 8px; font-weight: 600;
-            transition: 0.3s; cursor: pointer; font-size: 0.9rem;
+        .btn-login {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff;
+            padding: 8px 20px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; transition: 0.3s; font-family: var(--font-head);
         }
-        .btn-nav:hover { background: rgba(255,255,255,0.1); border-color: var(--text-main); }
+        .btn-login:hover { border-color: var(--primary); background: rgba(124, 58, 237, 0.1); }
 
         /* --- HERO --- */
         .hero {
-            padding: 180px 0 100px; text-align: center; position: relative;
+            padding: 160px 0 100px; text-align: center; position: relative;
+            background: radial-gradient(circle at center, rgba(30,10,50,0.4) 0%, rgba(3,3,3,1) 70%);
         }
-        
-        .pill {
-            display: inline-block; padding: 6px 16px; background: rgba(138, 43, 226, 0.1);
-            border: 1px solid rgba(138, 43, 226, 0.3); color: #d8b4fe; border-radius: 50px;
-            font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 30px; text-transform: uppercase;
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 2px; color: #d8b4fe; margin-bottom: 30px; font-weight: 600;
         }
-
         .hero h1 {
-            font-size: 4.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 24px; letter-spacing: -2px;
+            font-family: var(--font-head); font-size: 4rem; line-height: 1.1; font-weight: 800;
+            letter-spacing: -2px; margin-bottom: 24px;
         }
-        .hero h1 span {
-            background: linear-gradient(to right, #fff, #c084fc);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
         .hero p {
-            font-size: 1.2rem; color: var(--text-sec); max-width: 700px; margin: 0 auto 50px; font-weight: 300;
+            font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; font-weight: 300;
         }
+        .cta-button {
+            display: inline-block; background: #fff; color: #000; padding: 18px 48px; border-radius: 8px;
+            font-family: var(--font-head); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            text-decoration: none; border: none; cursor: pointer; box-shadow: 0 0 30px rgba(255,255,255,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-button:hover { transform: translateY(-4px); box-shadow: 0 0 50px rgba(124, 58, 237, 0.5); }
 
-        /* Botão Principal */
-        .cta-primary {
-            background: #fff; color: #000; padding: 18px 48px; font-size: 1.1rem;
-            border-radius: 8px; font-weight: 800; border: none; cursor: pointer;
-            box-shadow: 0 0 40px rgba(255,255,255,0.2); transition: 0.3s;
-            position: relative; overflow: hidden;
+        .dashboard-mockup {
+            margin-top: 80px; background: #0d0d0d; border: 1px solid var(--border); border-radius: 12px;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,1); position: relative; overflow: hidden;
+            aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+            max-width: 900px; margin-left: auto; margin-right: auto;
         }
-        .cta-primary:hover {
-            transform: translateY(-5px); box-shadow: 0 0 60px rgba(138, 43, 226, 0.4);
+        .play-icon {
+            width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px);
+            display: flex; align-items: center; justify-content: center; color: #fff;
+            cursor: pointer; transition: 0.3s;
         }
-        
-        /* Stats Ticker (Simulando crescimento) */
-        .stats-ticker {
-            display: flex; gap: 40px; justify-content: center; margin-top: 60px;
-            opacity: 0.7; font-family: monospace;
-        }
-        .stat-item { display: flex; flex-direction: column; align-items: center; }
-        .stat-val { font-size: 1.5rem; color: var(--accent); font-weight: 700; }
-        .stat-lbl { font-size: 0.8rem; color: var(--text-sec); text-transform: uppercase; }
+        .play-icon:hover { transform: scale(1.1); background: rgba(124, 58, 237, 0.3); border-color: var(--primary); }
 
-        /* --- PAIN/PROBLEM (The Hamster Wheel) --- */
-        .problem-section {
-            padding: 100px 0; border-top: 1px solid var(--border);
-            background: linear-gradient(180deg, var(--bg-body) 0%, #0a0a0a 100%);
+        /* --- SEÇÕES PADRÃO --- */
+        .section-padding { padding: 100px 0; border-top: 1px solid var(--border); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .text-block h2 { font-family: var(--font-head); font-size: 2.5rem; margin-bottom: 20px; line-height: 1.2; }
+        .text-block p { color: var(--text-muted); margin-bottom: 20px; font-size: 1.05rem; }
+        .highlight-box {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid var(--border); padding: 30px; border-radius: 12px;
         }
-        .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        
-        .pain-text h2 { font-size: 2.5rem; margin-bottom: 20px; }
-        .pain-text p { color: var(--text-sec); margin-bottom: 20px; font-size: 1.1rem; }
-        
-        .vs-card {
-            background: var(--bg-card); border: 1px solid var(--border); padding: 40px; border-radius: 16px;
-        }
-        .amador { border-left: 3px solid #ef4444; padding-left: 20px; margin-bottom: 30px; opacity: 0.6; }
-        .pro { border-left: 3px solid var(--accent); padding-left: 20px; }
-        .role { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px; display: block; }
-        .desc { font-size: 1.2rem; font-weight: 600; }
+        .stat-big { font-size: 3rem; font-weight: 800; color: var(--primary); font-family: var(--font-head); }
+        .stat-label { text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; color: #fff; }
 
-        /* --- FEATURES (The System) --- */
-        .features { padding: 100px 0; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
-        
-        .f-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--border); padding: 35px; border-radius: 16px; transition: 0.3s;
+        /* --- SOCIAL PROOF (NOVO) --- */
+        .logo-ticker {
+            display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; opacity: 0.4;
+            margin-bottom: 60px; filter: grayscale(100%);
         }
-        .f-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .f-icon { font-size: 2rem; margin-bottom: 20px; display: block; }
-        .f-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
-        .f-card p { color: var(--text-sec); font-size: 0.95rem; line-height: 1.6; }
+        .logo-item { font-weight: 700; font-size: 1.2rem; letter-spacing: -1px; }
 
-        /* --- LIFESTYLE SECTION --- */
-        .lifestyle {
-            text-align: center; padding: 100px 0; background: url('https://grainy-gradients.vercel.app/noise.svg'), radial-gradient(circle, #1a0529 0%, #050505 100%);
+        .testimonials-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
         }
-        .lifestyle h2 { font-size: 3rem; max-width: 800px; margin: 0 auto 30px; }
-        .lifestyle p { color: var(--text-sec); max-width: 600px; margin: 0 auto 40px; }
+        .review-card {
+            background: var(--bg-surface); border: 1px solid var(--border); padding: 30px;
+            border-radius: 12px; transition: 0.3s;
+        }
+        .review-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        
+        .user-profile { display: flex; align-items: center; margin-bottom: 15px; }
+        .avatar {
+            width: 45px; height: 45px; border-radius: 50%; background: #333; margin-right: 15px;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem;
+        }
+        .user-info h4 { font-size: 0.95rem; color: #fff; font-weight: 600; }
+        .user-info span { font-size: 0.8rem; color: var(--primary); }
+        .review-text { font-size: 0.95rem; color: var(--text-muted); font-style: italic; line-height: 1.6; }
+
+        /* Fake Tweet Card */
+        .tweet-card {
+            background: #000; border: 1px solid #333; padding: 25px; border-radius: 12px;
+        }
+        .tweet-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .tweet-metrics { display: flex; gap: 20px; margin-top: 15px; font-size: 0.8rem; color: #666; }
+
+        /* --- FEATURES GRID --- */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 60px; }
+        .feature-card {
+            background: #080808; border: 1px solid var(--border); padding: 35px 30px;
+            border-radius: 10px; transition: 0.3s;
+        }
+        .feature-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .icon { font-size: 1.8rem; margin-bottom: 20px; display: block; }
+        .feature-card h3 { font-family: var(--font-head); font-size: 1.2rem; margin-bottom: 12px; }
+        .feature-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
 
         /* --- PRICING --- */
-        .price-wrapper { padding: 100px 0; text-align: center; }
-        .price-card {
-            background: #0a0a0a; border: 1px solid var(--border); max-width: 500px; margin: 0 auto;
-            padding: 60px 40px; border-radius: 24px; position: relative; overflow: hidden;
+        .pricing-section { text-align: center; background: radial-gradient(circle at top, #111, #030303); }
+        .price-box {
+            background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1);
+            display: inline-block; padding: 60px 40px; border-radius: 20px;
+            max-width: 450px; width: 100%; position: relative;
         }
-        .price-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-        .amount { font-size: 4rem; font-weight: 800; color: #fff; margin: 20px 0; }
-        .period { font-size: 1rem; color: var(--text-sec); font-weight: 400; }
-        .benefits-list { list-style: none; text-align: left; margin: 40px 0; padding: 0 20px; }
-        .benefits-list li { margin-bottom: 15px; display: flex; align-items: center; color: #ddd; }
-        .benefits-list li span { color: var(--accent); margin-right: 15px; font-weight: bold; }
+        .price-val { font-size: 3.5rem; font-weight: 800; font-family: var(--font-head); margin: 15px 0; }
+        .price-sub { font-size: 1rem; color: var(--text-muted); }
+        .check-list { text-align: left; margin: 30px 0; list-style: none; }
+        .check-list li { margin-bottom: 12px; display: flex; align-items: center; color: #e5e5e5; }
+        .check-list li span { color: var(--primary); margin-right: 12px; font-weight: bold; }
 
-        /* RESPONSIVE */
+        /* --- FOOTER --- */
+        footer { padding: 40px 0; text-align: center; border-top: 1px solid var(--border); color: #555; font-size: 0.8rem; }
+
+        /* RESPONSIVIDADE */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .grid-split { grid-template-columns: 1fr; }
-            .stats-ticker { flex-wrap: wrap; gap: 20px; }
+            .hero h1 { font-size: 2.5rem; }
+            .btn-login { padding: 8px 14px; font-size: 0.75rem; }
+            .grid-2, .grid-3, .testimonials-grid { grid-template-columns: 1fr; gap: 40px; }
+            .price-box { padding: 40px 20px; }
+            .cta-button { width: 100%; padding: 16px 0; }
+            .logo-ticker { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glow-effect"></div>
+    <div class="noise-overlay"></div>
 
     <header>
-        <div class="container">
+        <div class="container nav-wrapper">
             <div class="brand">Pandy<span>Post</span>.</div>
-            <button class="btn-nav">Login Dashboard</button>
+            <button class="btn-login" onclick="alert('Portal do Usuário')">Área de Membros</button>
         </div>
     </header>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="container">
-            <span class="pill">Para Creators, Influencers & Visionários</span>
-            <h1>A ONIPRESENÇA DIGITAL<br>NÃO EXIGE <span>SUA PRESENÇA.</span></h1>
-            <p>Alimente o algoritmo 24/7 enquanto você vive sua vida. O protocolo definitivo de agendamento para quem joga o jogo do crescimento infinito.</p>
+            <div class="badge">Automação Inteligente</div>
+            <h1>PARE DE TRABALHAR<br>PARA O <span class="gradient-text">ALGORITMO.</span></h1>
+            <p>Se você posta manualmente todos os dias, você é escravo do seu celular. Recupere seu tempo e esteja presente em todas as redes, simultaneamente.</p>
+            <a href="#planos" class="cta-button">Automatizar Agora</a>
+            <div class="dashboard-mockup">
+                <div class="play-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <p style="position: absolute; bottom: 20px; color: #555; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;">Dashboard PandyPost v2.0</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROVAS SOCIAIS (NOVA SEÇÃO) -->
+    <section class="section-padding" style="background: #060606;">
+        <div class="container">
             
-            <button class="cta-primary">Começar Agora</button>
-
-            <!-- Social Proof Simulada (Métricas) -->
-            <div class="stats-ticker">
-                <div class="stat-item">
-                    <span class="stat-val">+1.2M</span>
-                    <span class="stat-lbl">Views Geradas</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-val">3x</span>
-                    <span class="stat-lbl">Crescimento Médio</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-val">0h</span>
-                    <span class="stat-lbl">Tempo Perdido</span>
-                </div>
+            <!-- Logos de "Autoridade Abstrata" -->
+            <div class="logo-ticker">
+                <div class="logo-item">AGENCY SCALE</div>
+                <div class="logo-item">CREATOR.INC</div>
+                <div class="logo-item">NEXUS MEDIA</div>
+                <div class="logo-item">VIRAL LABS</div>
+                <div class="logo-item">ECOMM PRO</div>
             </div>
-        </div>
-    </section>
 
-    <!-- PROBLEM / AWARENESS -->
-    <section class="problem-section">
-        <div class="container">
-            <div class="grid-split">
-                <div class="pain-text">
-                    <h2>SAIA DA "RODA DOS RATOS" DA CRIAÇÃO DE CONTEÚDO.</h2>
-                    <p>O maior erro do influencer estagnado é achar que precisa postar manualmente todos os dias. Isso gera burnout, inconsistência e queda de engajamento.</p>
-                    <p>Os maiores nomes do mercado (Finch, Kayky, Top Afiliados) não tocam no botão "Publicar" há anos. Eles têm sistemas.</p>
-                    <p style="color: #fff; font-weight: 600;">O PandyPost é esse sistema.</p>
-                </div>
-                <div class="vs-card">
-                    <div class="amador">
-                        <span class="role" style="color: #ef4444;">O AMADOR (Burnout)</span>
-                        <div class="desc">Grava, edita e posta no mesmo dia. Esquece horários. Fica refém do celular nas viagens.</div>
-                    </div>
-                    <div class="pro">
-                        <span class="role" style="color: var(--accent);">O PROFISSIONAL (Scale)</span>
-                        <div class="desc">Tira um dia para produzir. Agenda o mês inteiro no PandyPost. Viaja enquanto o algoritmo trabalha para ele.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FEATURES -->
-    <section class="features">
-        <div class="container">
             <div style="text-align: center; margin-bottom: 60px;">
-                <h2 style="font-size: 2.5rem;">SUA MÁQUINA DE <span style="color: var(--primary);">AUTORIDADE</span></h2>
+                <h2 style="font-family: var(--font-head); font-size: 2rem;">QUEM USA, <span class="gradient-text">DOMINA.</span></h2>
+                <p style="color: var(--text-muted);">Junte-se a 2.500+ creators e marcas que escalaram em silêncio.</p>
             </div>
-            
-            <div class="feature-grid">
-                <div class="f-card">
-                    <span class="f-icon">🚀</span>
-                    <h3>Viralização Multi-Plataforma</h3>
-                    <p>Um vídeo curto. Três destinos (TikTok, Reels, Shorts). Triplique suas chances de viralizar sem triplicar seu trabalho.</p>
+
+            <div class="testimonials-grid">
+                <!-- Depoimento 1: Influencer (Foco em Liberdade) -->
+                <div class="review-card">
+                    <div class="user-profile">
+                        <div class="avatar" style="background: #7c3aed;">M</div>
+                        <div class="user-info">
+                            <h4>Matheus K.</h4>
+                            <span>Influencer Lifestyle</span>
+                        </div>
+                    </div>
+                    <p class="review-text">"Eu vivia ansioso se não postasse stories ou reels todo dia. Com o PandyPost, tiro meu domingo pra agendar a semana toda. Viajo sem culpa e meus números nunca estiveram tão altos."</p>
                 </div>
-                <div class="f-card">
-                    <span class="f-icon">📅</span>
-                    <h3>Calendário Infinito</h3>
-                    <p>Programe semanas de conteúdo em minutos. O PandyPost posta religiosamente nos horários de pico, chova ou faça sol.</p>
+
+                <!-- Depoimento 2: Tweet Viral (Foco em Resultado) -->
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <div style="width:30px; height:30px; background:#fff; border-radius:50%;"></div>
+                            <div style="font-size:0.9rem; font-weight:700;">André Sales <span style="color:#555; font-weight:400;">@andresales_ads</span></div>
+                        </div>
+                        <div style="color:#7c3aed;">Seguir</div>
+                    </div>
+                    <p style="color:#ddd; margin-bottom:10px;">O segredo não é trabalhar mais. É automação. Instalei o PandyPost na operação da loja e o tráfego orgânico do TikTok triplicou em 20 dias. Bizarro. 🚀📈</p>
+                    <div class="tweet-metrics">
+                        <span>124 Retweets</span>
+                        <span>1.2k Curtidas</span>
+                    </div>
                 </div>
-                <div class="f-card">
-                    <span class="f-icon">🛡️</span>
-                    <h3>Proteção Anti-Shadowban</h3>
-                    <p>Usamos tecnologia de ponta para simular comportamento humano. Sua conta segura, sem riscos de bloqueio por automação barata.</p>
-                </div>
-                <div class="f-card">
-                    <span class="f-icon">💎</span>
-                    <h3>Interface de Cinema</h3>
-                    <p>Dark mode nativo. Analíticos claros. Uma dashboard que dá prazer de usar e mostra exatamente o crescimento do seu império.</p>
+
+                <!-- Depoimento 3: Agência/Negócio (Foco em Escala) -->
+                <div class="review-card">
+                    <div class="user-profile">
+                        <div class="avatar" style="background: #00ffcc; color:#000;">C</div>
+                        <div class="user-info">
+                            <h4>Camila R.</h4>
+                            <span>Dona de E-commerce</span>
+                        </div>
+                    </div>
+                    <p class="review-text">"Antes eu pagava um social media só para ficar postando vídeo. Hoje uso esse budget para tráfego pago, porque o PandyPost faz o trabalho operacional de graça pra mim. ROI infinito."</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- LIFESTYLE / ASPIRATIONAL -->
-    <section class="lifestyle">
+    <!-- DOR E SOLUÇÃO -->
+    <section class="section-padding">
         <div class="container">
-            <h2>"VOCÊ NÃO PODE ESCALAR O QUE DEPENDE <span style="color: var(--accent);">DAS SUAS MÃOS.</span>"</h2>
-            <p>O digital é um jogo de alavancagem. Quem tem as melhores ferramentas, ganha. Pare de jogar no modo *Hard*.</p>
-            <button class="cta-primary" style="background: transparent; border: 1px solid #fff; color: #fff;">Ver Planos</button>
+            <div class="grid-2">
+                <div class="text-block">
+                    <h2>A INTERNET PREMIA A <span class="gradient-text">CONSTÂNCIA</span>, NÃO O ESFORÇO.</h2>
+                    <p>Você pode criar o melhor conteúdo do mundo. Se você esquecer de postar um dia, ou postar no horário errado, o algoritmo te ignora.</p>
+                    <p>O segredo de quem tem milhões de seguidores não é "sorte". É <strong>Sistema</strong>.</p>
+                    <p>O PandyPost foi criado para garantir que sua marca seja onipresente, faça chuva ou faça sol, enquanto você foca no que realmente importa.</p>
+                </div>
+                <div class="highlight-box">
+                    <div class="stat-big">+300%</div>
+                    <div class="stat-label">Alcance Médio (Omnichannel)</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #888;">Ao distribuir o mesmo vídeo no TikTok, Reels e Shorts simultaneamente.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- PRICING -->
-    <section class="price-wrapper">
+    <!-- RECURSOS -->
+    <section class="section-padding" style="background: #050505;">
         <div class="container">
-            <div class="price-card">
-                <h3 style="text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; color: var(--primary);">Acesso Creator Pro</h3>
-                <div class="amount">R$ 97<span class="period">/mês</span></div>
-                <p style="color: var(--text-sec); font-size: 0.9rem;">Menos que um jantar. Mais valioso que um funcionário.</p>
+            <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+                <h2 style="font-family: var(--font-head); font-size: 2rem;">TECNOLOGIA DE PONTA.<br><span style="color: var(--primary);">ZERO COMPLEXIDADE.</span></h2>
+            </div>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <span class="icon">⚡</span>
+                    <h3>Upload Unificado</h3>
+                    <p>Carregue seu vídeo uma vez. Nós distribuímos automaticamente para TikTok, Instagram e YouTube Shorts. Sem marcas d'água.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">📅</span>
+                    <h3>Calendário Visual</h3>
+                    <p>Organize sua semana inteira em 10 minutos. Arraste e solte para definir os melhores horários. Esqueça o celular o resto da semana.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🔒</span>
+                    <h3>Segurança Total</h3>
+                    <p>Não usamos bots ilegais. Nossa tecnologia simula o comportamento humano, mantendo sua conta segura e livre de bloqueios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <ul class="benefits-list">
-                    <li><span>✓</span> Contas Ilimitadas (Insta/TikTok/YT)</li>
-                    <li><span>✓</span> Uploads em Alta Definição (4K)</li>
-                    <li><span>✓</span> Agendamento de Stories e Feed</li>
-                    <li><span>✓</span> Analíticos de Crescimento</li>
-                    <li><span>✓</span> Suporte Prioritário</li>
+    <!-- PREÇO -->
+    <section id="planos" class="section-padding pricing-section">
+        <div class="container">
+            <div class="price-box">
+                <p style="text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; color: var(--primary); font-weight: 700;">Plano Creator Pro</p>
+                <div class="price-val">R$ 97<span style="font-size: 1rem; font-weight: 400; color: #666">/mês</span></div>
+                <p class="price-sub">O preço de um jantar pela sua liberdade de tempo.</p>
+                <ul class="check-list">
+                    <li><span>✓</span> Contas Ilimitadas</li>
+                    <li><span>✓</span> Agendamento TikTok, Reels & Shorts</li>
+                    <li><span>✓</span> Editor de Capas e Legendas</li>
+                    <li><span>✓</span> Analytics de Crescimento</li>
+                    <li><span>✓</span> Sem Fidelidade (Cancele quando quiser)</li>
                 </ul>
-
-                <button class="cta-primary" style="width: 100%; background: var(--primary); color: #fff; box-shadow: 0 0 20px rgba(138,43,226,0.4);">Assinar PandyPost</button>
-                <p style="margin-top: 20px; font-size: 0.8rem; color: #555;">7 dias de garantia incondicional.</p>
+                <button class="cta-button" style="width: 100%; background: var(--primary); color: #fff; border: 1px solid var(--primary);">Começar Agora</button>
             </div>
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 40px; border-top: 1px solid var(--border); color: #444; font-size: 0.8rem;">
-        <p>&copy; 2024 PandyPost. Feito para quem quer dominar o mundo.</p>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 PandyPost. Todos os direitos reservados.</p>
+            <div style="margin-top: 15px; opacity: 0.6;">
+                <span style="margin: 0 10px;">Termos</span> • <span style="margin: 0 10px;">Privacidade</span> • <span style="margin: 0 10px;">Suporte</span>
+            </div>
+        </div>
     </footer>
 
 </body>
